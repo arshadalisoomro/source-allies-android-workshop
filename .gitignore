@@ -1,0 +1,16 @@
+.gradle
+/local.properties
+/backend/Users
+/backend/build
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+.gradle/
+.idea/
+*.iml
+.gitignore~
+readme.md~
+local.properties
+**/.DS_STORE
+**/*.mp4
