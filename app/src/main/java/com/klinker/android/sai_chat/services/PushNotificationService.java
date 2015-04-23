@@ -43,7 +43,11 @@ public class PushNotificationService extends IntentService {
      *      1.) Implement the admin notifications. Just handling the text of the message
      *      2.) Implement the user to user notification by creating it from scratch with a
      *          reference to the Message object
+     *      3.) Register the receiver that starts this service in the AndroidManifest.xml so that
+     *          we can be sure that this is started correctly
+     *      4.) Register this service in the AndroidManifest.xml
      */
+
     private static final int ADMIN_MESSAGE_THREAD_ID = -1;
 
     public static final int ADMIN_NOTIFICATION_ID = 1;
@@ -133,29 +137,7 @@ public class PushNotificationService extends IntentService {
         // If you are into it, make a BigTextStyle notification: http://developer.android.com/training/notify-user/expanded.html
         // Big text will allow the user to swipe down on the notification (with an android device on 4.1+) to display more text
 
-        builder.setSmallIcon(R.drawable.sb_icon);
-        builder.setContentTitle("SAI Message");
-        builder.setContentText(message);
 
-        // creating a "Big Style" from our text allows the notification to be expanded on 4.1+
-        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
-
-        Intent resultIntent = new Intent(this, ConversationListActivity.class);
-        resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        // intents are used for instant action. Since a notification could be clicked any time, we
-        // create a PendingIntent and place it on our notification builder
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        this,
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-        builder.setContentIntent(resultPendingIntent);
-
-        sendNotification(builder, ADMIN_NOTIFICATION_ID);
     }
 
     private void makeMessageNotification(Message message) {
@@ -163,26 +145,7 @@ public class PushNotificationService extends IntentService {
 
         // TODO #2
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.sb_icon);
-        builder.setContentTitle(message.getSender().getRealName());
-        builder.setContentText(message.getText());
-        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message.getText()));
 
-        Intent resultIntent = new Intent(this, ConversationListActivity.class);
-        resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        this,
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-        builder.setContentIntent(resultPendingIntent);
-
-        sendNotification(builder, MESSAGE_NOTIFICATION_ID);
     }
 
     private void sendNotification(NotificationCompat.Builder builder, int id) {
