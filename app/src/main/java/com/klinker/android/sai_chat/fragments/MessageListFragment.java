@@ -40,11 +40,16 @@ public class MessageListFragment extends Fragment {
      *
      *      1.) inflate the fragment_message_list layout and return it from the onCreateView(...)
      *          - Similar to how we have done it in the adapters
-     *          - Find and set the listView, replyBar, and sendButton views (View.findViewById(int))
-     *      2.) Implement the sendButton.onClickListener(...) and call the sendMessage(String) function
+     *          - Find and set the listView view for the message list(View.findViewById(int))
+     *      2.) Create a MessageArrayAdapter object and apply it to the list view
+     *
+     *
+     * (To be done in part 5)
+     *
+     *      3.) Create and initialize the sendButton and replyBar views in the xml and fragment
+     *      4.) Implement the sendButton.onClickListener(...) and call the sendMessage(String) function
      *          - grab the text to send with EditText.getText().toString()
      *          - set the text of the reply bar back to blank
-     *      3.) Create a MessageArrayAdapter object and apply it to the list view
      */
 
     public static final String EXTRA_THREAD_ID = "thread_id";
@@ -101,8 +106,9 @@ public class MessageListFragment extends Fragment {
 
         // find the views from the inflated layout
         listView = (ListView) v.findViewById(R.id.listview);
-        replyBar = (EditText) v.findViewById(R.id.reply_text);
-        sendButton = (ImageButton) v.findViewById(R.id.send_button);
+
+
+        // TODO #3
 
 
         // get the arguements and start loading the data and filling the list
@@ -110,16 +116,8 @@ public class MessageListFragment extends Fragment {
         new GetMessages().execute();
 
 
-        // TODO #2
+        // TODO #4
 
-        // set the functionality of the send button
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage(replyBar.getText().toString());
-                replyBar.setText("");
-            }
-        });
 
         // return the view that we inflated
         return v;
@@ -158,7 +156,7 @@ public class MessageListFragment extends Fragment {
 
     private void setMessageAdapter(List<Message> messages) {
 
-        // TODO #3
+        // TODO #2
 
         MessageArrayAdapter adapter = new MessageArrayAdapter(getActivity(), messages);
         listView.setAdapter(adapter);
