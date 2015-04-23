@@ -39,8 +39,8 @@ public class MessageArrayAdapter extends ArrayAdapter<Message> {
      * TODO:
      *
      *      1.) fill in the message_item.xml
-     *          - I just used one TextView, nothing fancy, but feel free to check out the Message class
-     *              to see what information is available to you
+     *          - I just used one TextView to display message text, nothing fancy, but feel free to check out the
+     *              Message class to see what information is available to you for displaying
      *      2.) Fill in the newView() method.
      *          - Extremely similar to the ThreadArrayAdapter method
      *      3.) Fill in the bindView(..) method
@@ -103,21 +103,7 @@ public class MessageArrayAdapter extends ArrayAdapter<Message> {
 
         // TODO #2
 
-        // inflate the layout
-        v = inflater.inflate(R.layout.message_item, viewGroup, false);
-
-        // create a new view holder object
-        final ViewHolder holder = new ViewHolder();
-
-        // assign the children for the view holder
-        holder.message = (TextView) v.findViewById(R.id.message_text);
-        holder.parent = (LinearLayout) v.findViewById(R.id.parent);
-
-        // set the tags so that we can find all of these view without searching for them every time
-        // (when the view is recycled)
-        v.setTag(holder);
-
-        return v;
+        return null;
     }
 
     // This is where we actually send the message objects information to the UI for the user to view
@@ -125,18 +111,6 @@ public class MessageArrayAdapter extends ArrayAdapter<Message> {
 
         // TODO #3
 
-        final ViewHolder holder = (ViewHolder) view.getTag();
-
-        // gravity based on whether the current user sent the message or not
-        // gravity in the parent will change the alignment for the message TextView
-        if (message.getSenderId() == userId) {
-            holder.parent.setGravity(Gravity.RIGHT);
-        } else {
-            holder.parent.setGravity(Gravity.LEFT);
-        }
-
-        // set the message messageText
-        holder.message.setText(message.getText());
     }
 
     @Override
@@ -150,16 +124,7 @@ public class MessageArrayAdapter extends ArrayAdapter<Message> {
 
         // TODO #4
 
-        if (convertView == null) {
-            v = newView(parent);
-        } else {
-            v = convertView;
-        }
-
-        // we will display all the info in bind view function.
-        bindView(v, messages.get(position));
-
-        return v;
+        return null;
     }
 }
 

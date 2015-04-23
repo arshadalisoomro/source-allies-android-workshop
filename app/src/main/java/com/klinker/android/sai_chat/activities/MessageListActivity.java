@@ -51,17 +51,8 @@ public class MessageListActivity extends AbstractToolbarActivity {
 
         // TODO #1
 
-        messageListFragment =  MessageListFragment.getInstance(threadId);
-
-        FragmentTransaction trans = getFragmentManager().beginTransaction();
-        trans.replace(R.id.conversation_fragment, messageListFragment);
-        trans.commit();
-
 
         // TODO #2
-
-        // set the activity title to what we found earlier
-        setActivityTitle(convoTitle);
 
 
         // set the activity to display the "<-" arrow in the top left of the app bar
@@ -75,7 +66,6 @@ public class MessageListActivity extends AbstractToolbarActivity {
             case android.R.id.home:
 
                 // TODO #3
-                finish();
 
                 return true;
             default:

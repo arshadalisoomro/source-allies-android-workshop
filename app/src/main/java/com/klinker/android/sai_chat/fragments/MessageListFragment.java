@@ -101,12 +101,6 @@ public class MessageListFragment extends Fragment {
 
         // TODO #1
 
-        // inflate the view and set the container ViewGroup as the parent
-        View v = inflater.inflate(R.layout.fragment_message_list, container, false);
-
-        // find the views from the inflated layout
-        listView = (ListView) v.findViewById(R.id.listview);
-
 
         // TODO #3
 
@@ -120,7 +114,7 @@ public class MessageListFragment extends Fragment {
 
 
         // return the view that we inflated
-        return v;
+        return null;
     }
 
     // Same idea as the ConversationFragment with the onResume and onPause methods
@@ -158,8 +152,6 @@ public class MessageListFragment extends Fragment {
 
         // TODO #2
 
-        MessageArrayAdapter adapter = new MessageArrayAdapter(getActivity(), messages);
-        listView.setAdapter(adapter);
     }
 
     /*
