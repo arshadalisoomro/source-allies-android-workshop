@@ -75,12 +75,6 @@ public class ConversationListActivity extends GCMRegisterActivity {
 
         // TODO #1
 
-        conversationFragment = ConversationFragment.newInstance();
-
-        // add the fragment to the UI in place of the conversation_fragment layout
-        FragmentTransaction trans = getFragmentManager().beginTransaction();
-        trans.replace(R.id.conversation_fragment, conversationFragment);
-        trans.commit();
     }
 
     @Override
@@ -117,19 +111,8 @@ public class ConversationListActivity extends GCMRegisterActivity {
 
         // TODO #2
 
-        // when the user clicks one of our menu options, this is where we define the functionality
-        switch (item.getItemId()) {
-            case R.id.menu_new_message:
-                // a new intent that will open a screen to input a new message
-                Intent newMessage = new Intent(this, NewMessageActivity.class);
-                startActivity(newMessage);
-                return true;
-            case R.id.menu_refresh_conversations:
-                refreshData();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+
+        return true;
     }
 
     private void refreshData() {
@@ -192,22 +175,6 @@ public class ConversationListActivity extends GCMRegisterActivity {
                 if(threadList != null) {
                     ThreadDataSource dataSource = ThreadDataSource.getInstance(ConversationListActivity.this);
                     dataSource.createThreads(threadList);
-                }
-
-                // find and save all the current users for the app so that we can interact with them
-                UserApi userApi = new UserApi();
-                JsonArray userList = userApi.findAllUsers();
-                if(userList != null) {
-                    UserDataSource dataSource = UserDataSource.getInstance(ConversationListActivity.this);
-                    dataSource.createUsers(userList);
-                }
-
-                // find and save all the messages for the user
-                MessagingApi messagingApi = new MessagingApi();
-                JsonArray messages = messagingApi.findUserMessages(userId);
-                if (messages != null) {
-                    MessageDataSource dataSource = MessageDataSource.getInstance(ConversationListActivity.this);
-                    dataSource.createMessages(messages);
                 }
 
                 return null;

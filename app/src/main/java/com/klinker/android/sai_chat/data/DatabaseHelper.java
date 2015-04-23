@@ -78,21 +78,7 @@ public class DatabaseHelper {
         // ThreadDataSource.getCursor() will return the cursor you need.
         // then just iterate through and fill an array to return rather than returning null.
 
-        Cursor cursor = threadData.getCursor();
-
-        final List<Thread> conversations = new ArrayList<Thread>();
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Thread conversation = new Thread(context);
-                conversation.fillFromCursor(cursor);
-
-                if (conversation.getLatestMessage() != null) {
-                    conversations.add(conversation);
-                }
-            } while (cursor.moveToNext());
-        }
-
-        return conversations;
+        return null;
     }
 
     public Thread findConversation(long threadId) {

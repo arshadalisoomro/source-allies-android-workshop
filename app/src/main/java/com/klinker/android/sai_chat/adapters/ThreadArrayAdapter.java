@@ -42,10 +42,10 @@ public class ThreadArrayAdapter extends ArrayAdapter<Thread> {
      *      2.) add the views to the holder
      *          - I would make 3 (name, messageHint, and picture), but feel free to customize this
      *              however you want!
-*           3.) Implement getCount() and getItem(int)
+     *      3.) Implement getCount() and getItem(int)
      *      4.) Create a ViewHolder object, fill in the children, then set the tag of the view
      *          - v.setTag(holder)
- *          5.) Fill in the fields of the ViewHolder
+     *      5.) Fill in the fields of the ViewHolder
      */
 
     protected Context context;
@@ -63,9 +63,6 @@ public class ThreadArrayAdapter extends ArrayAdapter<Thread> {
 
         // TODO #2
 
-        public TextView name;
-        public TextView messageHint;
-        public ImageView picture;
     }
 
     public ThreadArrayAdapter(Context context, List<Thread> conversations) {
@@ -88,14 +85,14 @@ public class ThreadArrayAdapter extends ArrayAdapter<Thread> {
     // NOTE: total number in the list, NOT what is currently on the UI
     @Override
     public int getCount() {
-        return conversations.size();
+        return 0;
     }
 
     // gets the thread object at the specificed position
     // NOTE: total position on the list, NOT what is currently on the UI
     @Override
     public Thread getItem(int position) {
-        return conversations.get(position);
+        return null;
     }
 
     // The adapter is telling us that we need to create a new view and that we CANNOT use a
@@ -109,16 +106,6 @@ public class ThreadArrayAdapter extends ArrayAdapter<Thread> {
 
         // TODO #4
 
-        // create a new view holder object
-        final ViewHolder holder = new ViewHolder();
-
-        // assign the children for the view holder
-        holder.name = (TextView) v.findViewById(R.id.contact_name);
-        holder.messageHint = (TextView) v.findViewById(R.id.message_hint);
-        holder.picture = (ImageView) v.findViewById(R.id.contact_id);
-
-        // set the tags so that we can find all of these view without searching for them every time
-        v.setTag(holder);
 
         return v;
     }
@@ -139,13 +126,7 @@ public class ThreadArrayAdapter extends ArrayAdapter<Thread> {
 
         // TODO #5
 
-        // display their name
-        holder.name.setText(otherUser.getRealName() + " (" + otherUser.getUsername() + ")");
 
-        // latest message should never be null, but check just in case
-        if (conversation.getLatestMessage() != null) {
-            holder.messageHint.setText(conversation.getLatestMessage().getText());
-        }
     }
 
     @Override

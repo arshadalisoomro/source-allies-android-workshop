@@ -46,6 +46,7 @@ public class ConversationFragment extends ListFragment {
      *      2.) Create an BroadcastReceiver for Sender.SENT_BROADCAST and register/unregister it on the
      *              onResume() and onPause() methods.
      *           - Look in GCMRegisterActivity for help with IntentFilters
+     *           - register in onResume, unregister in onPause
      *      3.) Fill out the AsyncTask to get the threads
      */
 
@@ -72,13 +73,6 @@ public class ConversationFragment extends ListFragment {
 
         // TODO #2
 
-        // An small explaination of Intent filters and these types of broadcast receivers can be
-        // found in the GCMRegisterActivity class
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Sender.SENT_BROADCAST);
-
-        getActivity().registerReceiver(sentBroadcastReceiver, filter);
-
 
 
         // not very efficient, but easy. We are just telling the fragment to update the list every time
@@ -90,9 +84,6 @@ public class ConversationFragment extends ListFragment {
     public void onPause() {
 
         // TODO #2
-
-        // remember to unregister so that we don't get those memory leaks.
-        getActivity().unregisterReceiver(sentBroadcastReceiver);
 
         super.onPause();
     }
@@ -127,22 +118,6 @@ public class ConversationFragment extends ListFragment {
                 //      4.) add the MessageListFragment.EXTRA_CONVO_NAME to the intent
                 //          This should be the user's name that the conversation is with
                 //      5.) Start the activity
-
-                Thread thread = adapter.getItem(position);
-
-                // I talk about adding these extras to the intent in the MessageListActivity.
-                // basically this is the way that we quickly send data between different
-                // portions of the app.
-                Intent messageList = new Intent(getActivity(), MessageListActivity.class);
-                messageList.putExtra(MessageListFragment.EXTRA_THREAD_ID, thread.getThreadId());
-
-                if (thread.getUser1Id() == currentUserId) {
-                    messageList.putExtra(MessageListFragment.EXTRA_CONVO_NAME, thread.getUser2().getRealName());
-                } else {
-                    messageList.putExtra(MessageListFragment.EXTRA_CONVO_NAME, thread.getUser1().getRealName());
-                }
-
-                startActivity(messageList);
             }
         });
     }
@@ -173,7 +148,7 @@ public class ConversationFragment extends ListFragment {
             // Hint: remember the database helper class and use the
             // getSortedList(List<Thread>) method
 
-            return getSortedList(new DatabaseHelper(getActivity()).findAllConversations());
+            return null;
         }
 
         @Override

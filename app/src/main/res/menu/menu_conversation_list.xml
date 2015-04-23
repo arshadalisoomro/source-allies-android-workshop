@@ -8,10 +8,4 @@
         android:icon="@drawable/ic_action_new_message"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/menu_refresh_conversations"
-        android:title="@string/refresh_conversations"
-        android:icon="@drawable/ic_action_refresh"
-        app:showAsAction="always" />
-
 </menu>
