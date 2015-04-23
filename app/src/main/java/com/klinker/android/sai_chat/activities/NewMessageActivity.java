@@ -32,7 +32,7 @@ public class NewMessageActivity extends AbstractToolbarActivity {
     /**
      * TODO:
      *
-     *      1.) Fill in the activity_new_message.xml layout with the 3 views:
+     *      1.) Fill in the activity_new_message.xml layout with the 3 views and add it to the activity:
      *          - AutoCompleteTextView, EditText, and ImageButton
      *      2.) Find the userAutoComplete, messageText, and sendButton views
      *      3.) Set the onClickListener for the sendButton
@@ -53,46 +53,14 @@ public class NewMessageActivity extends AbstractToolbarActivity {
 
         // TODO #1
 
-        setContentView(R.layout.activity_new_message);
-
 
         // TODO #2
-
-        // find our views
-        userAutoComplete = (AutoCompleteTextView) findViewById(R.id.user_auto_complete);
-        messageText = (EditText) findViewById(R.id.message_text);
-        sendButton = (ImageButton) findViewById(R.id.send_button);
 
         setUpAutoComplete();
 
 
         // TODO #3
 
-        // set a click listener on the send button to send the message to the user.
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // since I said things got more complex with custom classes on the auto complete,
-                // we can simply map the string list we use to the user objects in our database
-                sendTo = userNameMap.get(userAutoComplete.getText().toString());
-
-                if (sendTo != null) {
-                    // used to get the current users id
-                    RegistrationUtils registrationUtils = new RegistrationUtils();
-
-                    // send the message in the background thread.
-                    // after the message is successfully sent, the Sender will send a broadcast for the fragments to update
-                    // with the action Sender.SEMT_BROADCAST.
-                    // we should listen for this broadcast on our fragments and update when necessary.
-                    Sender sender = new Sender(NewMessageActivity.this);
-                    sender.sendNewMessage(sendTo.getUserId(), registrationUtils.getMyUserId(NewMessageActivity.this), messageText.getText().toString());
-
-                    // we don't want to keep the user waiting on the new message screen, so finish this
-                    // activity and kick them back to the conversation list.
-                    finish();
-                }
-            }
-        });
     }
 
     private void setUpAutoComplete() {
@@ -102,19 +70,6 @@ public class NewMessageActivity extends AbstractToolbarActivity {
         // create and set the adapter to the userAutoComplete view
         // Creating generic array adapter: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
-        final List<User> users = getUserList();
-        final List<String> autoCompleteList = getAutoCompleteList(users);
-
-        // create a generic string adapter. We dont even have to write this,
-        // android has the most basic ones build in. Phew.
-        ArrayAdapter<String> adapter = new ArrayAdapter<> (
-                this,
-                android.R.layout.select_dialog_item,
-                autoCompleteList
-        );
-
-        userAutoComplete.setThreshold(1);
-        userAutoComplete.setAdapter(adapter);
     }
 
     private List<User> getUserList() {
