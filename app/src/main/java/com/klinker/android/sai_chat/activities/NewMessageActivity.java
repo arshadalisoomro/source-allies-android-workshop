@@ -52,14 +52,30 @@ public class NewMessageActivity extends AbstractToolbarActivity {
         super.onCreate(savedInstanceState);
 
         // TODO #1
+        setContentView(R.layout.activity_new_message);
 
 
         // TODO #2
+        userAutoComplete = (AutoCompleteTextView) findViewById(R.id.auto_complete);
+        messageText = (EditText) findViewById(R.id.reply_text);
+        sendButton = (ImageButton) findViewById(R.id.send_button);
+
 
         setUpAutoComplete();
 
-
         // TODO #3
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long recipId = userNameMap.get(userAutoComplete.getText().toString()).getUserId();
+                long userId = new RegistrationUtils().getMyUserId(NewMessageActivity.this);
+
+                Sender sender = new Sender(NewMessageActivity.this);
+                sender.sendNewMessage(recipId, userId, messageText.getText().toString());
+
+                finish();
+            }
+        });
 
     }
 
@@ -70,6 +86,14 @@ public class NewMessageActivity extends AbstractToolbarActivity {
         // create and set the adapter to the userAutoComplete view
         // Creating generic array adapter: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
+        List<User> userList = getUserList();
+        List<String> userStrings = getAutoCompleteList(userList);
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, userStrings);
+        userAutoComplete.setAdapter(adapter);
+
+        userAutoComplete.setThreshold(1);
     }
 
     private List<User> getUserList() {
